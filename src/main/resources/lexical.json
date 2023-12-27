@@ -1,0 +1,283 @@
+{
+  "states": [
+    {
+      "name": "Global",
+      "expressions": [
+        {
+          "regular_expression": "//",
+          "processing": "Jump",
+          "token_id": "BEGIN_OF_COMMENT",
+          "target_state": "Comentario"
+        },
+        {
+          "regular_expression": "/\\*",
+          "processing": "Jump",
+          "token_id": "BEGIN_OF_COMMENT",
+          "target_state": "Comentario_Bloco"
+        },
+        {
+          "regular_expression": "System\\.out\\.println",
+          "processing": "Return_token",
+          "token_id": "PRINTLN"
+        },
+        {
+          "regular_expression": "System",
+          "processing": "Return_token",
+          "token_id": "SYSTEM"
+        },
+        {
+          "regular_expression": "class",
+          "processing": "Return_token",
+          "token_id": "CLASS"
+        },
+        
+        {
+          "regular_expression": "public",
+          "processing": "Return_token",
+          "token_id": "PUBLIC"
+        },
+        {
+          "regular_expression": "static",
+          "processing": "Return_token",
+          "token_id": "STATIC"
+        },
+        {
+          "regular_expression": "void",
+          "processing": "Return_token",
+          "token_id": "VOID"
+        },
+        {
+          "regular_expression": "main",
+          "processing": "Return_token",
+          "token_id": "MAIN"
+        },
+        {
+          "regular_expression": "extends",
+          "processing": "Return_token",
+          "token_id": "EXTENDS"
+        },
+        {
+          "regular_expression": "if",
+          "processing": "Return_token",
+          "token_id": "IF"
+        },
+        {
+          "regular_expression": "else",
+          "processing": "Return_token",
+          "token_id": "ELSE"
+        },
+        {
+          "regular_expression": "this",
+          "processing": "Return_token",
+          "token_id": "THIS"
+        },
+        {
+          "regular_expression": "new",
+          "processing": "Return_token",
+          "token_id": "NEW"
+        },
+        {
+          "regular_expression": ",",
+          "processing": "Return_token",
+          "token_id": "COMMA"
+        },
+        {
+          "regular_expression": ";",
+          "processing": "Return_token",
+          "token_id": "SEMICOLON"
+        },
+        {
+          "regular_expression": "\\.",
+          "processing": "Return_token",
+          "token_id": "DOT"
+        },
+        {
+          "regular_expression": "while",
+          "processing": "Return_token",
+          "token_id": "WHILE"
+        },
+        {
+          "regular_expression": "return",
+          "processing": "Return_token",
+          "token_id": "RETURN"
+        },
+        {
+          "regular_expression": "!",
+          "processing": "Return_token",
+          "token_id": "NOT"
+        },
+        {
+          "regular_expression": "&&",
+          "processing": "Return_token",
+          "token_id": "AND"
+        },
+        {
+          "regular_expression": "<",
+          "processing": "Return_token",
+          "token_id": "LESS_THAN"
+        },
+        {
+          "regular_expression": "!=",
+          "processing": "Return_token",
+          "token_id": "DIFFERENT"
+        },
+        {
+          "regular_expression": "true",
+          "processing": "Return_token",
+          "token_id": "TRUE_BOOLEAN"
+        },
+        {
+          "regular_expression": "false",
+          "processing": "Return_token",
+          "token_id": "FALSE_BOOLEAN"
+        },
+        {
+          "regular_expression": "String",
+          "processing": "Return_token",
+          "token_id": "STRING"
+        },
+        {
+          "regular_expression": "int",
+          "processing": "Return_token",
+          "token_id": "INTEGER_TYPE"
+        },
+        {
+          "regular_expression": "boolean",
+          "processing": "Return_token",
+          "token_id": "BOOLEAN_TYPE"
+        },
+        {
+          "regular_expression": "null",
+          "processing": "Return_token",
+          "token_id": "NULL"
+        },
+        {
+          "regular_expression": "=",
+          "processing": "Return_token",
+          "token_id": "EQUALS"
+        },
+        {
+          "regular_expression": "\\+",
+          "processing": "Return_token",
+          "token_id": "MORE"
+        },
+        {
+          "regular_expression": "-",
+          "processing": "Return_token",
+          "token_id": "MINUS"
+        },
+        {
+          "regular_expression": "\\*",
+          "processing": "Return_token",
+          "token_id": "MULT"
+        },
+        {
+          "regular_expression": "length",
+          "processing": "Return_token",
+          "token_id": "LENGTH"
+        },
+        {
+          "regular_expression": "\\(",
+          "processing": "Return_token",
+          "token_id": "OPEN_PARENTHESES"
+        },
+        {
+          "regular_expression": "\\)",
+          "processing": "Return_token",
+          "token_id": "CLOSE_PARENTHESES"
+        },
+        {
+          "regular_expression": "\\[",
+          "processing": "Return_token",
+          "token_id": "OPEN_BRACKETS"
+        },
+        {
+          "regular_expression": "\\]",
+          "processing": "Return_token",
+          "token_id": "CLOSE_BRACKETS"
+        },
+        {
+          "regular_expression": "\\{",
+          "processing": "Return_token",
+          "token_id": "OPEN_KEYS"
+        },
+        {
+          "regular_expression": "\\}",
+          "processing": "Return_token",
+          "token_id": "CLOSE_KEYS"
+        },
+        {
+          "regular_expression": "\\d+",
+          "processing": "Return_token",
+          "token_id": "INTEGER_LITERAL"
+        },
+        {
+          "regular_expression": "[a-zA-Z][a-zA-Z0-9]*",
+          "processing": "Return_token",
+          "token_id": "IDENTIFIER"
+        },
+        {
+          "regular_expression":  "\\n",
+          "processing": "Ignore_with_line"
+        },
+        {
+          "regular_expression":  " ",
+          "processing": "Ignore"
+        },
+        {
+          "regular_expression":  "\r",
+          "processing": "Ignore"
+        },
+        {
+          "regular_expression":  "\t",
+          "processing": "Ignore"
+        },
+        {
+          "regular_expression":  "$",
+          "processing": "Ignore"
+        },
+        
+        
+        {
+		  "regular_expression": ".+",
+		  "processing": "Return_token",
+		  "token_id": "ERROR"
+		}
+        
+        
+      ]
+    },
+    {
+      "name": "Comentario",
+      "expressions": [
+        {
+          "regular_expression": "\\n",
+          "processing": "Jump_with_line",
+          "target_state": "Global"
+        },
+        {
+          "regular_expression": ".*",
+          "processing": "Ignore"
+        }
+      ]
+    },
+    {
+      "name": "Comentario_Bloco",
+      "expressions": [
+        {
+          "regular_expression": "\\*/",
+          "processing": "Jump",
+          "target_state": "Global"
+        },
+        {
+          "regular_expression": "[\\n]+",
+          "processing": "Ignore_with_line"
+        },
+        {
+          "regular_expression": "[^\\s]+",
+          "processing": "Ignore"
+        }
+      ]
+    }
+  ]
+}

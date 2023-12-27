@@ -1,0 +1,478 @@
+{
+  "NonTerminal": [
+    {
+      "name": "GOAL",
+      "symbols": ["MAIN_CLASS", "TYPE_DECLARATION"],
+      "type": "structured"
+    },
+    {
+      "name": "MAIN_CLASS",
+      "symbols": ["CLASS", "IDENTIFIER", "OPEN_KEYS", "PUBLIC", "STATIC", "VOID", "MAIN", "OPEN_PARENTHESES", "STRING", "OPEN_BRACKETS", "CLOSE_BRACKETS", "IDENTIFIER", "CLOSE_PARENTHESES", "OPEN_KEYS", "MORE_STATEMENT_OR_VAR", "CLOSE_KEYS", "CLOSE_KEYS"],
+      "type": "structured",
+      "action":"saveVar"
+    },
+    {
+      "name": "TYPE_DECLARATION",
+      "symbols": ["CLASS_DECLARATION"],
+      "type": "or",
+      "terminais": { "CLASS_DECLARATION": ["CLASS"] }
+    },
+    
+    {
+      "name": "CLASS_DECLARATION",
+      "symbols": ["CLASS", "IDENTIFIER", "CLASS_EXTENDS_DECLARATION", "OPEN_KEYS", "MORE_METHOD_DECLARATION", "CLOSE_KEYS"],
+      "type": "structured",
+      "action":"saveVar"
+    },
+    {
+      "name": "CLASS_EXTENDS_DECLARATION",
+      "symbols": ["CLASS_EXTENDS"],
+      "terminais":{"CLASS_EXTENDS":["EXTENDS"]},
+      "type": "or"
+    },
+    {
+      "name": "CLASS_EXTENDS",
+      "symbols": ["EXTENDS","IDENTIFIER"],
+      "type": "structured",
+      "action":"verifyClass"
+    },
+    {
+      "name": "VAR_DECLARATION",
+      "symbols": ["TYPE", "IDENTIFIER", "SEMICOLON", "MORE_STATEMENT_OR_VAR"],
+      "type": "structured",
+      "action":"saveVar"
+    },
+    {
+      "name": "MORE_STATEMENT_OR_VAR",
+      "symbols": ["VAR_DECLARATION","STATEMENT"],
+      "type": "or",
+      "terminais": { "VAR_DECLARATION": ["INTEGER_TYPE", "BOOLEAN_TYPE"], "STATEMENT": ["OPEN_KEYS","IDENTIFIER","IF","WHILE", "PRINTLN"] }
+    },
+    {
+      "name": "METHOD_DECLARATION",
+      "symbols": ["PUBLIC", "TYPE", "IDENTIFIER", "OPEN_PARENTHESES", "FORMAL_PARAMETER_LIST", "CLOSE_PARENTHESES", "OPEN_KEYS", "MORE_STATEMENT_OR_VAR", "RETURN", "EXPRESSION", "SEMICOLON", "CLOSE_KEYS","MORE_METHOD_DECLARATION"],
+      "type": "structured",
+      "action":"saveMethod"
+    },
+    {
+      "name": "FORMAL_PARAMETER_LIST",
+      "symbols": ["FORMAL_PARAMETER_OPTION"],
+      "type": "or",
+      "terminais":{"FORMAL_PARAMETER_OPTION":["INTEGER_TYPE","BOOLEAN_TYPE","IDENTIFIER"]}
+    },
+    {
+      "name": "FORMAL_PARAMETER_OPTION",
+      "symbols": ["FORMAL_PARAMETER", "POSSIBLE_FORMAL_PARAMETER"],
+      "type": "structured"
+    },
+    {
+      "name": "FORMAL_PARAMETER",
+      "symbols": ["TYPE", "IDENTIFIER"],
+      "type": "structured",
+      "action":"saveVarWithClear"
+    },
+    {
+      "name": "POSSIBLE_FORMAL_PARAMETER",
+      "symbols": ["FORMAL_PARAMETER_REST"],
+      "type": "or",
+      "terminais":{"FORMAL_PARAMETER_REST":["COMMA"]}
+    },
+    
+    {
+      "name": "FORMAL_PARAMETER_REST",
+      "symbols": ["COMMA", "FORMAL_PARAMETER","POSSIBLE_FORMAL_PARAMETER"],
+      "type": "structured"
+    },
+    
+    {
+      "name": "MORE_METHOD_DECLARATION",
+      "symbols": ["METHOD_DECLARATION"],
+      "type": "or",
+      "terminais": { "METHOD_DECLARATION": ["PUBLIC"] }
+    },
+    {
+      "name": "BLOCK",
+      "symbols": ["OPEN_KEYS", "MORE_STATEMENT_OR_VAR", "CLOSE_KEYS", "STATEMENT"],
+      "type": "structured"
+    },
+    
+    {
+      "name": "STATEMENT",
+      "symbols": ["BLOCK", "ASSIGNMENT_STATEMENT_MEDIUM", "IF_STATEMENT", "WHILE_STATEMENT", "PRINT_STATEMENT"],
+      "type": "or",
+      "terminais": { "BLOCK": ["OPEN_KEYS"], "ASSIGNMENT_STATEMENT_MEDIUM": ["IDENTIFIER"], "IF_STATEMENT": ["IF"], "WHILE_STATEMENT": ["WHILE"], "PRINT_STATEMENT": ["PRINTLN"] }
+    },
+    {
+      "name": "ASSIGNMENT_STATEMENT_MEDIUM",
+      "symbols": ["IDENTIFIER","ASSIGNMENT_STATEMENT"],
+      "type": "structured"
+    },
+    
+    {
+      "name": "ASSIGNMENT_STATEMENT",
+      "symbols": ["ARRAY_ASSIGNMENT_STATEMENT", "NOT_ARRAY_ASSIGNMENT_STATEMENT","DECLARATION"],
+      "type": "or",
+      "terminais":{"ARRAY_ASSIGNMENT_STATEMENT":["OPEN_BRACKETS"], "NOT_ARRAY_ASSIGNMENT_STATEMENT":["EQUALS"], "DECLARATION":["IDENTIFIER"]}
+    },
+    {
+      "name": "DECLARATION",
+      "symbols": ["IDENTIFIER", "SEMICOLON","MORE_STATEMENT_OR_VAR"],
+      "type": "structured",
+      "action":"saveVar"
+    },
+    {
+      "name": "NOT_ARRAY_ASSIGNMENT_STATEMENT",
+      "symbols": ["EQUALS", "EXPRESSION", "SEMICOLON", "MORE_STATEMENT_OR_VAR"],
+      "type": "structured"
+    },
+    
+    {
+      "name": "ARRAY_ASSIGNMENT_STATEMENT",
+      "symbols": ["OPEN_BRACKETS", "EXPRESSION", "CLOSE_BRACKETS", "EQUALS", "EXPRESSION", "SEMICOLON","MORE_STATEMENT_OR_VAR"],
+      "type": "structured"
+    },
+    {
+      "name": "IF_STATEMENT",
+      "symbols": ["IF", "OPEN_PARENTHESES", "EXPRESSION", "CLOSE_PARENTHESES", "OPEN_KEYS","MORE_STATEMENT_OR_VAR", "CLOSE_KEYS", "ELSE_OR_STATEMENT"],
+      "type": "structured"
+    },
+    {
+      "name": "ELSE_STATEMENT",
+      "symbols": ["ELSE","OPEN_KEYS","MORE_STATEMENT_OR_VAR", "CLOSE_KEYS", "MORE_STATEMENT_OR_VAR"],
+      "type": "structured"
+    },
+    {
+      "name": "ELSE_OR_STATEMENT",
+      "symbols": ["ELSE_STATEMENT","MORE_STATEMENT_OR_VAR"],
+      "type": "or",
+      "terminais": {"ELSE_STATEMENT":["ELSE"], "MORE_STATEMENT_OR_VAR":["OPEN_KEYS","IDENTIFIER","IF","WHILE", "PRINTLN","INTEGER_TYPE","BOOLEAN_TYPE"]}
+    },
+    
+    {
+      "name": "WHILE_STATEMENT",
+      "symbols": ["WHILE", "OPEN_PARENTHESES", "EXPRESSION", "CLOSE_PARENTHESES", "OPEN_KEYS", "MORE_STATEMENT_OR_VAR","CLOSE_KEYS","MORE_STATEMENT_OR_VAR"],
+      "type": "structured"
+    },
+    {
+      "name": "PRINT_STATEMENT",
+      "symbols": ["PRINTLN", "OPEN_PARENTHESES", "EXPRESSION", "CLOSE_PARENTHESES", "SEMICOLON","MORE_STATEMENT_OR_VAR"],
+      "type": "structured"
+    },
+    {
+      "name": "EXPRESSION",
+      "symbols": ["PRIMARY_EXPRESSION", "OPERATOR"],
+      "type": "structured"
+    },
+    
+    {
+      "name": "OPERATOR",
+      "symbols": ["AND_EXPRESSION", "COMPARE_EQUALS", "COMPARE_EXPRESSION", "PLUS_EXPRESSION", "MINUS_EXPRESSION", "TIMES_EXPRESSION", "ARRAY_LOOKUP", "CONSUME_DOT", "PRIMARY_EXPRESSION"],
+      "type": "or",
+      "terminais": { "AND_EXPRESSION": ["AND"],"COMPARE_EQUALS":["EQUALS"], "COMPARE_EXPRESSION": ["LESS_THAN"], "PLUS_EXPRESSION": ["MORE"], "MINUS_EXPRESSION": ["MINUS"], "TIMES_EXPRESSION": ["MULT"], "ARRAY_LOOKUP": ["OPEN_BRACKETS"], "CONSUME_DOT": ["DOT"], "PRIMARY_EXPRESSION": ["INTEGER_LITERAL", "TRUE_BOOLEAN", "FALSE_BOOLEAN", "IDENTIFIER", "THIS_EXPRESSION", "NOT_EXPRESSION" , "BRACKET_EXPRESSION"]}
+    },
+    {
+      "name": "PRIMARY_EXPRESSION",
+      "symbols": ["INTEGER_LITERAL", "TRUE_BOOLEAN", "FALSE_BOOLEAN", "IDENTIFIER", "THIS_EXPRESSION", "CONSUME_NEW", "NOT_EXPRESSION", "BRACKET_EXPRESSION"],
+      "type": "or",
+      "terminais": { "INTEGER_LITERAL": ["INTEGER_LITERAL"], "TRUE_BOOLEAN": ["TRUE_BOOLEAN"], "FALSE_BOOLEAN": ["FALSE_BOOLEAN"], "IDENTIFIER": ["IDENTIFIER"], "THIS_EXPRESSION": ["THIS_EXPRESSION"], "NOT_EXPRESSION": ["NOT_SYMBOL"], "BRACKET_EXPRESSION": ["OPEN_PARENTHESES"], "CONSUME_NEW":["NEW"] }
+    },
+    {
+		"name":"CONSUME_NEW",
+		"symbols":["NEW","ALLOCATION_EXPRESSION_OR_ARRAY"],
+		"type":"structured"
+	},
+    {
+		"name":"ALLOCATION_EXPRESSION_OR_ARRAY",
+		"symbols":["ARRAY_ALLOCATION_EXPRESSION","ALLOCATION_EXPRESSION"],
+		"type":"or",
+		"terminais":{"ARRAY_ALLOCATION_EXPRESSION":["INTEGER_TYPE"],"ALLOCATION_EXPRESSION":["IDENTIFIER"]}
+	},
+    {
+      "name": "BRACKET_EXPRESSION",
+      "symbols": ["OPEN_PARENTHESES", "EXPRESSION", "CLOSE_PARENTHESES"],
+      "type": "structured"
+    },
+    {
+      "name": "ARRAY_ALLOCATION_EXPRESSION",
+      "symbols": ["INTEGER_TYPE", "OPEN_BRACKETS", "EXPRESSION", "CLOSE_BRACKETS"],
+      "type": "structured"
+    },
+    {
+      "name": "ALLOCATION_EXPRESSION",
+      "symbols": ["IDENTIFIER", "OPEN_PARENTHESES", "CLOSE_PARENTHESES"],
+      "type": "structured",
+      "action":"verifyClass"
+    },
+    {
+      "name": "NOT_EXPRESSION",
+      "symbols": ["NOT_SYMBOL", "EXPRESSION"],
+      "type": "structured"
+    },
+    {
+      "name": "COMPARE_EQUALS",
+      "symbols": ["EQUALS","EQUALS", "EXPRESSION"],
+      "type": "structured"
+    },
+    {
+      "name": "AND_EXPRESSION",
+      "symbols": ["AND", "EXPRESSION"],
+      "type": "structured"
+    },
+    {
+      "name": "COMPARE_EXPRESSION",
+      "symbols": ["LESS_THAN", "EXPRESSION"],
+      "type": "structured"
+    },
+    {
+      "name": "PLUS_EXPRESSION",
+      "symbols": ["MORE", "EXPRESSION"],
+      "type": "structured"
+    },
+    {
+      "name": "MINUS_EXPRESSION",
+      "symbols": ["MINUS", "EXPRESSION"],
+      "type": "structured"
+    },
+    {
+      "name": "TIMES_EXPRESSION",
+      "symbols": ["MULT", "EXPRESSION"],
+      "type": "structured"
+    },
+    {
+      "name": "ARRAY_LOOKUP",
+      "symbols": ["OPEN_BRACKETS", "PRIMARY_EXPRESSION", "CLOSE_BRACKETS"],
+      "type": "structured"
+    },
+    {
+	  "name": "CONSUME_DOT",
+      "symbols": ["DOT","ARRAY_LENGTH_OR_SEND"],
+      "type": "structured"
+		
+	},
+	{
+	"name": "ARRAY_LENGTH_OR_SEND",
+    "symbols": ["ARRAY_LENGTH","MESSAGE_SEND"],
+     "type": "or",
+     "terminais":{"ARRAY_LENGTH": ["LENGTH"], "MESSAGE_SEND":["IDENTIFIER"] }
+    },
+    {
+	"name": "ARRAY_LENGTH",
+    "symbols": ["LENGTH"],
+     "type": "structured"
+    },
+    {
+	"name": "MESSAGE_SEND",
+    "symbols": ["IDENTIFIER","OPEN_PARENTHESES","FORMAL_PARAMETER_LIST", "CLOSE_PARENTHESES"],
+     "type": "structured"
+    },
+    
+    {
+      "name": "EXPRESSION_LIST",
+      "symbols": ["EXPRESSION", "EXPRESSION_REST"],
+      "type": "structured"
+    },
+    {
+      "name": "EXPRESSION_REST",
+      "symbols": [",", "EXPRESSION", "EXPRESSION_REST"],
+      "type": "structured"
+    },
+    {
+      "name": "TYPE",
+      "symbols": ["CONSUME_INT", "BOOLEAN_TYPE", "IDENTIFIER"],
+      "type": "or",
+      "terminais": { "CONSUME_INT": ["INTEGER_TYPE"], "BOOLEAN_TYPE": ["BOOLEAN_TYPE"], "IDENTIFIER":["IDENTIFIER"]}
+    },
+    {
+      "name": "CONSUME_INT",
+      "symbols": ["INTEGER_TYPE","INT_OR_ARRAY_TYPE"],
+      "type": "structured"
+    },
+    
+     {
+      "name": "INT_OR_ARRAY_TYPE",
+      "symbols": ["ARRAY_TYPE","INTEGER_TYPE"],
+      "type": "or",
+      "terminais": { "ARRAY_TYPE":["OPEN_BRACKETS"],"INTEGER_TYPE": ["INTEGER_TYPE"] }
+    },
+    {
+      "name": "ARRAY_TYPE",
+      "symbols": ["OPEN_BRACKETS", "CLOSE_BRACKETS"],
+      "type": "structured"
+    }
+  ],
+  "Terminal": [
+    {
+      "name": "CLASS",
+      "symbols": ["class"]
+    },
+    {
+      "name": "THIS_EXPRESSION",
+      "symbols": ["this"]
+    },
+    {
+      "name": "INTEGER_LITERAL",
+      "symbols": ["<INTEGER_LITERAL>"]
+    },
+    {
+      "name": "TRUE_BOOLEAN",
+      "symbols": ["true"]
+    },
+    {
+      "name": "FALSE_BOOLEAN",
+      "symbols": ["false"]
+    },
+    {
+      "name": "EXTENDS",
+      "symbols": ["extends"]
+    },
+    {
+      "name": "OPEN_KEYS",
+      "symbols": ["{"]
+    },
+    {
+      "name": "CLOSE_KEYS",
+      "symbols": ["}"]
+    },
+    {
+      "name": "PUBLIC",
+      "symbols": ["public"]
+    },
+    {
+      "name": "STATIC",
+      "symbols": ["static"]
+    },
+    {
+      "name": "VOID",
+      "symbols": ["void"]
+    },
+    {
+      "name": "RETURN",
+      "symbols": ["return"]
+    },
+    {
+      "name": "MAIN",
+      "symbols": ["main"]
+    },
+    {
+      "name": "OPEN_PARENTHESES",
+      "symbols": ["("]
+    },
+    {
+      "name": "STRING",
+      "symbols": ["String"]
+    },
+    {
+      "name": "OPEN_BRACKETS",
+      "symbols": ["["]
+    },
+    {
+      "name": "CLOSE_BRACKETS",
+      "symbols": ["]"]
+    },
+    {
+      "name": "CLOSE_PARENTHESES",
+      "symbols": [")"]
+    },
+    {
+      "name": "IF",
+      "symbols": ["if"]
+    },
+    {
+      "name": "ELSE",
+      "symbols": ["else"]
+    },
+    {
+      "name": "WHILE",
+      "symbols": ["while"]
+    },
+    {
+      "name": "PRINTLN",
+      "symbols": ["System.out.println"]
+    },
+    {
+      "name": "MORE",
+      "symbols": ["+"]
+    },
+    {
+      "name": "MINUS",
+      "symbols": ["-"]
+    },
+    {
+      "name": "MULT",
+      "symbols": ["*"]
+    },
+    {
+      "name": "EQUALS",
+      "symbols": ["="]
+    },
+    {
+      "name": "SEMICOLON",
+      "symbols": [";"]
+    },
+    {
+      "name": "DOT",
+      "symbols": ["."]
+    },
+    {
+      "name": "COMMA",
+      "symbols": [","]
+    },
+    {
+      "name": "NEW",
+      "symbols": ["new"]
+    },
+    {
+      "name": "NOT",
+      "symbols": ["!"]
+    },
+    {
+      "name": "INTEGER_TYPE",
+      "symbols": ["int"]
+    },
+    {
+      "name": "BOOLEAN_TYPE",
+      "symbols": ["boolean"]
+    },
+    {
+      "name": "AND",
+      "symbols": ["&&"]
+    },
+    {
+      "name": "LESS_THAN",
+      "symbols": ["<"]
+    },
+    {
+      "name": "PLUS",
+      "symbols": ["+"]
+    },
+    {
+      "name": "MINUS",
+      "symbols": ["-"]
+    },
+    {
+      "name": "COMMA",
+      "symbols": [","]
+    },
+    {
+      "name": "TIMES",
+      "symbols": ["*"]
+    },
+    {
+      "name": "LENGTH",
+      "symbols": ["length"]
+    },
+    {
+      "name": "EXPRESSION_REST",
+      "symbols": [""]
+    },
+    {
+      "name": "IDENTIFIER",
+      "symbols": ["<IDENTIFIER>"]
+    },
+    {
+      "name": "VAZIO",
+      "symbols": [""]
+    }
+    
+  ]
+}
